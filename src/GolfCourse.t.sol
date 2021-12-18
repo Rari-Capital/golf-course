@@ -13,32 +13,34 @@ contract GolfCourseTest is DSTest {
     }
 
     function testUnoptimizedDivideByTwo() public {
-        /// 🤦 Unoptimized
         assertEq(course.unoptimizedDivideByTwo(), 2);
     }
+
     function testOptimizedDivideByTwo() public {
         assertEq(course.optimizedDivideByTwo(), 2);
-    }
-    function testOptimizedPreferGteLteOverGtLt() public {
-        assertTrue(course.optimizedPreferGteLteOverGtLt());
     }
 
     function testUnoptimizedPreferGteLteOverGtLt() public {
         assertTrue(course.unoptimizedPreferGteLteOverGtLt());
     }
-    function testOptimizedUseCodeLength() public {
-        assertTrue(course.optimizedUseCodeLength() > 0);
-    }
 
-    function testUnoptimizedUseCodeLength() public {
-        assertTrue(course.unoptimizedUseCodeLength() > 0);
-    }
-    function testOptimizedPreferNotEqualOverGtLt() public {
-        assertTrue(course.optimizedPreferNotEqualOverGtLt());
+    function testOptimizedPreferGteLteOverGtLt() public {
+        assertTrue(course.optimizedPreferGteLteOverGtLt());
     }
 
     function testUnoptimizedPreferNotEqualOverGtLt() public {
         assertTrue(course.unoptimizedPreferNotEqualOverGtLt());
     }
 
+    function testOptimizedPreferNotEqualOverGtLt() public {
+        assertTrue(course.optimizedPreferNotEqualOverGtLt());
+    }
+
+    function testUnoptimizedUseCodeLength() public {
+        assertTrue(course.unoptimizedUseCodeLength() > 0);
+    }
+
+    function testOptimizedUseCodeLength() public {
+        assertTrue(course.optimizedUseCodeLength() > 0);
+    }
 }
