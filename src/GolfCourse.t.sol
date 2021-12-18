@@ -12,11 +12,33 @@ contract GolfCourseTest is DSTest {
         course = new GolfCourse();
     }
 
-    function testFail_basic_sanity() public {
-        assertTrue(false);
+    function testUnoptimizedDivideByTwo() public {
+        /// 🤦 Unoptimized
+        assertEq(course.unoptimizedDivideByTwo(), 2);
+    }
+    function testOptimizedDivideByTwo() public {
+        assertEq(course.optimizedDivideByTwo(), 2);
+    }
+    function testOptimizedPreferGteLteOverGtLt() public {
+        assertTrue(course.optimizedPreferGteLteOverGtLt());
     }
 
-    function test_basic_sanity() public {
-        assertTrue(true);
+    function testUnoptimizedPreferGteLteOverGtLt() public {
+        assertTrue(course.unoptimizedPreferGteLteOverGtLt());
     }
+    function testOptimizedUseCodeLength() public {
+        assertTrue(course.optimizedUseCodeLength() > 0);
+    }
+
+    function testUnoptimizedUseCodeLength() public {
+        assertTrue(course.unoptimizedUseCodeLength() > 0);
+    }
+    function testOptimizedPreferNotEqualOverGtLt() public {
+        assertTrue(course.optimizedPreferNotEqualOverGtLt());
+    }
+
+    function testUnoptimizedPreferNotEqualOverGtLt() public {
+        assertTrue(course.unoptimizedPreferNotEqualOverGtLt());
+    }
+
 }
