@@ -1,0 +1,1 @@
+compare :; forge test --match-contract $(c)Test
