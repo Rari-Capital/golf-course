@@ -1,0 +1,13 @@
+[default]
+src = 'src'
+out = 'out'
+libs = ['lib']
+fuzz_runs = 256
+optimizer = true
+optimizer_runs = 1000000
+remappings = [
+    'ds-test/=lib/ds-test/src/',
+    ]
+verbosity = 3
+
+# See more config options https://github.com/gakonst/foundry/tree/master/config
