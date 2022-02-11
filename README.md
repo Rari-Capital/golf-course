@@ -1,15 +1,15 @@
-# golf-course
+# ⛳ golf-course
 A list of common Solidity optimization tips and myths.
 
 ## Table of contents
   - [Tips](#tips)
-    - [Operators](#operators)
-    - [Compiler](#compiler)
+    - [Operators](#-operators)
+    - [Compiler](#-compiler)
   - [Myths](#myths)
 
 ## Tips
 
-### Operators
+### ➗ Operators
 
 #### Right Shift Instead of Dividing By 2
 
@@ -19,14 +19,14 @@ The `SHR` opcode is 3 gas cheaper than `DIV` and also bypasses Solidity's divisi
 - [Full Example]()
 
 ```solidity
-// 🤦 Unoptimized
+// 🚩 Unoptimized
 uint256 two = 4 / 2;
 
-// 🚀 Optimized
+// 🏌️ Optimized
 uint256 two = 4 >> 1;
 ```
 
-### Compiler
+### 🤖 Compiler
 
 #### Function ordering
 
@@ -46,7 +46,7 @@ Calling a function at runtime will be cheaper if the function is positioned earl
 - [Full Example]()
 
 ```solidity
-// 🤦 Unoptimized
+// 🚩 Unoptimized
 // Method ID: 0x13216062 (position: 1, gas: 98)
 bytes32 public occasionallyCalled;
 // Method ID: 0xd0755f53 (position: 3, gas: 142)
@@ -54,7 +54,7 @@ function mostCalled() external {}
 // Method ID: 0x24de5553 (position: 2, gas: 120)
 function leastCalled() external {}
 
-// 🚀 Optimized
+// 🏌️ Optimized
 // Method ID: 0x13216062 (position: 2, gas: 120)
 bytes32 public occasionallyCalled;
 // Method ID: 0x0000a818 (position: 1, gas: 98) 👈

@@ -6,7 +6,7 @@ contract UnoptimizedFunctionOrdering {
     // Method ID: 0x13216062
     bytes32 public occasionallyCalled;
 
-    // 🤦 Unoptimized
+    // 🚩 Unoptimized
     // Method ID: 0xd0755f53
     function mostCalled() external {}
 
@@ -18,7 +18,7 @@ contract OptimizedFunctionOrdering {
     // Method ID: 0x13216062
     bytes32 public occasionallyCalled;
 
-    // 🚀 Optimized
+    // 🏌️ Optimized
     // Method ID: 0x0000a818
     function mostCalled_41q() external {}
 
