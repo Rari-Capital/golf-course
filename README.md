@@ -12,10 +12,10 @@ A list of common Solidity optimization tips and myths.
 
 bool private locked = false;
 modifier nonReentrant() {
-    require(locked == 1, "REENTRANCY");
-    locked = 2;
+    require(locked == false, "REENTRANCY");
+    locked = true;
     _;
-    locked = 1;
+    locked = false;
 }
 
 /// 🚀 Optimized (gas: 2053)
