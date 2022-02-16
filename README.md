@@ -29,7 +29,7 @@ modifier nonReentrant() {
 ```
 
 Use a reentrancy guard like [Solmate](https://github.com/Rari-Capital/solmate/blob/main/src/utils/ReentrancyGuard.sol) which employs uint instead of boolean storage variable which saves gas.
-  - [Full Example](https://github.com/Rari-Capital/golf-course/blob/fc1882bacfec50787d9e9435d59fed4a9091fb21/src/OptimizedReentrancy.sol)
+  - [Full Example](https://github.com/Rari-Capital/golf-course/blob/fc1882bacfec50787d9e9435d59fed4a9091fb21/src/optimized/Reentrancy.sol)
 
 - - - -
 ### When iterating through a storage array, cache the array length first ###
@@ -45,7 +45,7 @@ uint256 arrLength = arr.length;
 for (uint256 index; index < arrLength; ++index) {}
 ```
 Caching the array length first saves an SLOAD on each iteration of the loop.
-  - [Full Example](https://github.com/Rari-Capital/golf-course/blob/fc1882bacfec50787d9e9435d59fed4a9091fb21/src/OptimizedCacheArrLength.sol)
+  - [Full Example](https://github.com/Rari-Capital/golf-course/blob/fc1882bacfec50787d9e9435d59fed4a9091fb21/src/optimized/CacheArrLength.sol)
 
 - - - -
 ### Use unchecked with counter incrementing logic ###
@@ -66,7 +66,7 @@ function _uncheckedIncrement(uint256 counter) private pure returns(uint256) {
 for (uint256 index; index < arrLength; index = _uncheckedIncrement(index)) {}
 ```
 It is a logical impossibility for index to overflow if it is always less than another integer (index < arrLength).  Skipping the unchecked saves ~60 gas per iteration.  Note: Part of the savings here comes from the fact that as of Solidity 0.8.2, the compiler will inline this function automatically.  Using an older pragma would reduce the gas savings. For additional info see [hrkrshnn's writeup](https://gist.github.com/hrkrshnn/ee8fabd532058307229d65dcd5836ddc)
-  - [Full Example](https://github.com/Rari-Capital/golf-course/blob/fc1882bacfec50787d9e9435d59fed4a9091fb21/src/OptimizedUncheckedIncrement.sol)
+  - [Full Example](https://github.com/Rari-Capital/golf-course/blob/fc1882bacfec50787d9e9435d59fed4a9091fb21/src/optimized/UncheckedIncrement.sol)
 
 
 - - - -
@@ -80,7 +80,7 @@ for (uint256 index; index < arrLength; index++) {}
 for (uint256 index; index < arrLength; ++index) {}
 ```
 Due to reduced stack operations, using ++index saves 5 gas per iteration
-  - [Full Example](https://github.com/Rari-Capital/golf-course/blob/fc1882bacfec50787d9e9435d59fed4a9091fb21/src/OptimizedPlusPlusIndex.sol)
+  - [Full Example](https://github.com/Rari-Capital/golf-course/blob/fc1882bacfec50787d9e9435d59fed4a9091fb21/src/optimized/PlusPlusIndex.sol)
 
 - - - -
 ### Prefer using immutable to storage ###
@@ -113,7 +113,7 @@ two = four >> 1;
 ```
 
 The `SHR` opcode is 3 gas cheaper than `DIV` and more imporantly, bypasses Solidity's division by 0 prevention overhead.  This can be used not only when dividing by two, but with any exponent of 2.
-  - [Full Example](https://github.com/Rari-Capital/golf-course/blob/fc1882bacfec50787d9e9435d59fed4a9091fb21/src/OptimizedDivideByTwo.sol)
+  - [Full Example](https://github.com/Rari-Capital/golf-course/blob/fc1882bacfec50787d9e9435d59fed4a9091fb21/src/optimized/DivideByTwo.sol)
 
 
 - - - -
@@ -129,7 +129,7 @@ require(notZero > 0);
 require(notZero != 0);
 ```
 In a require, when checking a UINT, using != 0 instead of > 0 saves 6 gas. Note: This only works in require but not in other situations.  For more info see [this thread](https://twitter.com/transmissions11/status/1469848358558711808?s=20&t=hyTZxmZKXq06opE8wgo1aA)
-  - [Full Example](https://github.com/Rari-Capital/golf-course/blob/fc1882bacfec50787d9e9435d59fed4a9091fb21/src/OptimizedRequireNeZero.sol)
+  - [Full Example](https://github.com/Rari-Capital/golf-course/blob/fc1882bacfec50787d9e9435d59fed4a9091fb21/src/optimized/RequireNeZero.sol)
 
 
 
