@@ -109,7 +109,7 @@ function doSomething() external pure {}
 /// 🚀 Optimized (gas: 760)
 function doSomething() payable external {}
 ```
-Making functions `payable` eliminates the need for an initial check of `msg.value == 0` and saves 21 gas. Note: This conservatively assumes the function could be `pure` if not for the `payable`.  When compared against an non-`pure` function the savings is more.  Note: For certain contracts, adding a `payable` function where none existed previously could introduce a security risk. Use with caution.
+Making functions `payable` eliminates the need for an initial check of `msg.value == 0` and saves 21 gas. Note: This conservatively assumes the function could be `pure` if not for the `payable`.  When compared against a non-`pure` function the savings is more (24 gas). When used for a constructor, the savings is on deployment. Note: For certain contracts, adding a `payable` function where none existed previously could introduce a security risk. Use with caution.
   - [Full Example](https://github.com/Rari-Capital/golf-course/blob/fc1882bacfec50787d9e9435d59fed4a9091fb21/src/optimized/PayableFunctions.sol)
 
 - - - -
