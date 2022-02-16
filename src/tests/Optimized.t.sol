@@ -9,6 +9,7 @@ import "./../contracts/OptimizedDivideByTwo.sol";
 import "./../contracts/OptimizedPlusPlusIndex.sol";
 import "./../contracts/OptimizedUncheckedIncrement.sol";
 import "./../contracts/OptimizedUseImmutable.sol";
+import "./../contracts/OptimizedRequireNeZero.sol";
 
 contract OptimizedTest is DSTest {
     OptimizedReentrancy public ctrctReentrancy;
@@ -16,6 +17,7 @@ contract OptimizedTest is DSTest {
     OptimizedPlusPlusIndex public ctrctPlusPlusIndex;
     OptimizedUncheckedIncrement public ctrctUncheckedIncrement;
     OptimizedUseImmutable public ctrctUseImmutable;
+    OptimizedRequireNeZero public ctrctRequireNeZero;
     OptimizedDivideByTwo public ctrctDivideByTwo;
 
     function setUp() public {
@@ -23,8 +25,13 @@ contract OptimizedTest is DSTest {
         ctrctCacheArrLength = new OptimizedCacheArrLength();
         ctrctPlusPlusIndex = new OptimizedPlusPlusIndex();
         ctrctUseImmutable = new OptimizedUseImmutable();
+        ctrctRequireNeZero = new OptimizedRequireNeZero();
         ctrctUncheckedIncrement = new OptimizedUncheckedIncrement();
         ctrctDivideByTwo = new OptimizedDivideByTwo();
+    }
+
+    function testRequireNeZero() public {
+        ctrctRequireNeZero.requireNeZero(4);
     }
 
     function testCacheArrLength() public {
