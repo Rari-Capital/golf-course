@@ -3,31 +3,31 @@ pragma solidity ^0.8.11;
 
 import "ds-test/test.sol";
 
-import "./../contracts/UnoptimizedCacheArrLength.sol";
-import "./../contracts/UnoptimizedPlusPlusIndex.sol";
-import "./../contracts/UnoptimizedReentrancy.sol";
-import "./../contracts/UnoptimizedDivideByTwo.sol";
-import "./../contracts/UnoptimizedUncheckedIncrement.sol";
-import "./../contracts/UnoptimizedUseImmutable.sol";
-import "./../contracts/UnoptimizedRequireNeZero.sol";
+import "./../contracts/unoptimized/CacheArrLength.sol";
+import "./../contracts/unoptimized/PlusPlusIndex.sol";
+import "./../contracts/unoptimized/Reentrancy.sol";
+import "./../contracts/unoptimized/DivideByTwo.sol";
+import "./../contracts/unoptimized/UncheckedIncrement.sol";
+import "./../contracts/unoptimized/UseImmutable.sol";
+import "./../contracts/unoptimized/RequireNeZero.sol";
 
-contract UnoptimizedTest is DSTest {
-    UnoptimizedCacheArrLength public ctrctCacheArrLength;
-    UnoptimizedPlusPlusIndex public ctrctPlusPlusIndex;
-    UnoptimizedUncheckedIncrement public ctrctUncheckedIncrement;
-    UnoptimizedReentrancy public ctrctReentrancy;
-    UnoptimizedDivideByTwo public ctrctDivideByTwo;
-    UnoptimizedUseImmutable public ctrctUseImmutable;
-    UnoptimizedRequireNeZero public ctrctRequireNeZero;
+contract Test is DSTest {
+    CacheArrLength public ctrctCacheArrLength;
+    PlusPlusIndex public ctrctPlusPlusIndex;
+    UncheckedIncrement public ctrctUncheckedIncrement;
+    Reentrancy public ctrctReentrancy;
+    DivideByTwo public ctrctDivideByTwo;
+    UseImmutable public ctrctUseImmutable;
+    RequireNeZero public ctrctRequireNeZero;
 
     function setUp() public {
-        ctrctCacheArrLength = new UnoptimizedCacheArrLength();
-        ctrctPlusPlusIndex = new UnoptimizedPlusPlusIndex();
-        ctrctUncheckedIncrement = new UnoptimizedUncheckedIncrement();
-        ctrctReentrancy = new UnoptimizedReentrancy();
-        ctrctDivideByTwo = new UnoptimizedDivideByTwo();
-        ctrctUseImmutable = new UnoptimizedUseImmutable();
-        ctrctRequireNeZero = new UnoptimizedRequireNeZero();
+        ctrctCacheArrLength = new CacheArrLength();
+        ctrctPlusPlusIndex = new PlusPlusIndex();
+        ctrctUncheckedIncrement = new UncheckedIncrement();
+        ctrctReentrancy = new Reentrancy();
+        ctrctDivideByTwo = new DivideByTwo();
+        ctrctUseImmutable = new UseImmutable();
+        ctrctRequireNeZero = new RequireNeZero();
     }
 
     function testRequireNeZero() public {

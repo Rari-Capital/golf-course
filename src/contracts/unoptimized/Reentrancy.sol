@@ -1,18 +1,19 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 pragma solidity ^0.8.11;
 
-contract OptimizedReentrancy {
+contract Reentrancy {
     event GenericEvent();
 
-    uint256 private locked = 1;
+    bool private locked = false;
 
     modifier nonReentrant() {
-        /// 🚀 Optimized
-        require(locked == 1, "REENTRANCY");
-        locked = 2;
+        /// 🤦 Unoptimized
+        require(locked == false, "REENTRANCY");
+        locked = true;
         _;
-        locked = 1;
+        locked = false;
     }
+
     function useUintForReentrancy() external nonReentrant returns(uint256 amount3) {
         // do some stuff
         uint256 amount1 = 1e18;
