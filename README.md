@@ -8,7 +8,7 @@ A list of common Solidity optimization tips and myths.
 ### Use UINT instead of BOOL for reentrancy guard ###
 
 ```solidity
-/// 🤦 Unoptimized (gas: 22180)
+/// 🤦 Unoptimized (gas: 22202)
 
 bool private locked = false;
 modifier nonReentrant() {
@@ -18,7 +18,7 @@ modifier nonReentrant() {
     locked = false;
 }
 
-/// 🚀 Optimized (gas: 2053)
+/// 🚀 Optimized (gas: 2125)
 bool private locked = 1;
 modifier nonReentrant() {
     require(locked == 1, "REENTRANCY");
@@ -37,10 +37,10 @@ Use a reentrancy guard like [Solmate](https://github.com/Rari-Capital/solmate/bl
 ```solidity
 uint256[] public arr = [uint256(1), 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-/// 🤦 Unoptimized (gas: 3077)
+/// 🤦 Unoptimized (gas: 3055)
 for (uint256 index; index < arr.length; ++index) {}
 
-/// 🚀 Optimized (gas: 2085)
+/// 🚀 Optimized (gas: 2013)
 uint256 arrLength = arr.length;
 for (uint256 index; index < arrLength; ++index) {}
 ```
@@ -52,11 +52,11 @@ Caching the array length first saves an SLOAD on each iteration of the loop.
 
 ```solidity
 
-/// 🤦 Unoptimized (gas: 1990)
+/// 🤦 Unoptimized (gas: 2035)
 for (uint256 index; index < arrLength; ++index) {}
 
 
-/// 🚀 Optimized (gas: 1315)
+/// 🚀 Optimized (gas: 1375)
 function _uncheckedIncrement(uint256 counter) private pure returns(uint256) {
     unchecked {
         return counter + 1;
@@ -105,10 +105,10 @@ Each storage read of the state variable is replaced by the instruction push32 va
 uint256 four = 4;
 uint256 two;
 
-/// 🤦 Unoptimized (gas: 942)
+/// 🤦 Unoptimized (gas: 1012)
 two = four / 2;
 
-/// 🚀 Optimized (gas: 866)
+/// 🚀 Optimized (gas: 933)
 two = four >> 1;
 ```
 
@@ -122,10 +122,10 @@ The `SHR` opcode is 3 gas cheaper than `DIV` and more imporantly, bypasses Solid
 ```solidity
 uint256 notZero = 4;
 
-/// 🤦 Unoptimized (gas: 942)
+/// 🤦 Unoptimized (gas: 867)
 require(notZero > 0);
 
-/// 🚀 Optimized (gas: 866)
+/// 🚀 Optimized (gas: 861)
 require(notZero != 0);
 ```
 In a require, when checking a UINT, using != 0 instead of > 0 saves 6 gas. Note: This only works in require but not in other situations.  For more info see [this thread](https://twitter.com/transmissions11/status/1469848358558711808?s=20&t=hyTZxmZKXq06opE8wgo1aA)
