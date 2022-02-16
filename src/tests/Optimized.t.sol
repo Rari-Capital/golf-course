@@ -10,6 +10,7 @@ import "./../contracts/optimized/PlusPlusIndex.sol";
 import "./../contracts/optimized/UncheckedIncrement.sol";
 import "./../contracts/optimized/UseImmutable.sol";
 import "./../contracts/optimized/RequireNeZero.sol";
+import "./../contracts/optimized/PayableFunctions.sol";
 
 contract Test is DSTest {
     Reentrancy public ctrctReentrancy;
@@ -19,6 +20,7 @@ contract Test is DSTest {
     UseImmutable public ctrctUseImmutable;
     RequireNeZero public ctrctRequireNeZero;
     DivideByTwo public ctrctDivideByTwo;
+    PayableFunctions public ctrctPayableFunctions;
 
     function setUp() public {
         ctrctReentrancy = new Reentrancy();
@@ -28,6 +30,11 @@ contract Test is DSTest {
         ctrctRequireNeZero = new RequireNeZero();
         ctrctUncheckedIncrement = new UncheckedIncrement();
         ctrctDivideByTwo = new DivideByTwo();
+        ctrctPayableFunctions = new PayableFunctions();
+    }
+
+    function testPayableFunctions() public {
+        ctrctPayableFunctions.payableFunctions();
     }
 
     function testRequireNeZero() public {

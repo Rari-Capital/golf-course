@@ -10,6 +10,7 @@ import "./../contracts/unoptimized/DivideByTwo.sol";
 import "./../contracts/unoptimized/UncheckedIncrement.sol";
 import "./../contracts/unoptimized/UseImmutable.sol";
 import "./../contracts/unoptimized/RequireNeZero.sol";
+import "./../contracts/unoptimized/PayableFunctions.sol";
 
 contract Test is DSTest {
     CacheArrLength public ctrctCacheArrLength;
@@ -19,6 +20,7 @@ contract Test is DSTest {
     DivideByTwo public ctrctDivideByTwo;
     UseImmutable public ctrctUseImmutable;
     RequireNeZero public ctrctRequireNeZero;
+    PayableFunctions public ctrctPayableFunctions;
 
     function setUp() public {
         ctrctCacheArrLength = new CacheArrLength();
@@ -28,8 +30,12 @@ contract Test is DSTest {
         ctrctDivideByTwo = new DivideByTwo();
         ctrctUseImmutable = new UseImmutable();
         ctrctRequireNeZero = new RequireNeZero();
+        ctrctPayableFunctions = new PayableFunctions();
     }
 
+    function testPayableFunctions() public {
+        ctrctPayableFunctions.payableFunctions();
+    }
     function testRequireNeZero() public {
         ctrctRequireNeZero.requireNeZero(4);
     }
