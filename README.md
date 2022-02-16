@@ -5,7 +5,7 @@ A list of common Solidity optimization tips and myths.
 # Tips
 
 - - - -
-### Use UINT instead of BOOL for reentrancy guard ###
+### Use `uint` instead of `bool` for reentrancy guard ###
 
 ```solidity
 /// 🤦 Unoptimized (gas: 22202)
@@ -28,7 +28,7 @@ modifier nonReentrant() {
 }
 ```
 
-Use a reentrancy guard like [Solmate](https://github.com/Rari-Capital/solmate/blob/main/src/utils/ReentrancyGuard.sol) which employs uint instead of boolean storage variable which saves gas.
+Use a reentrancy guard like [Solmate](https://github.com/Rari-Capital/solmate/blob/main/src/utils/ReentrancyGuard.sol) which employs `uint` instead of `bool` storage variable which saves gas.
   - [Full Example](https://github.com/Rari-Capital/golf-course/blob/fc1882bacfec50787d9e9435d59fed4a9091fb21/src/optimized/Reentrancy.sol)
 
 - - - -
@@ -44,7 +44,7 @@ for (uint256 index; index < arr.length; ++index) {}
 uint256 arrLength = arr.length;
 for (uint256 index; index < arrLength; ++index) {}
 ```
-Caching the array length first saves an SLOAD on each iteration of the loop.
+Caching the array length first saves an `SLOAD` on each iteration of the loop.
   - [Full Example](https://github.com/Rari-Capital/golf-course/blob/fc1882bacfec50787d9e9435d59fed4a9091fb21/src/optimized/CacheArrLength.sol)
 
 - - - -
@@ -65,12 +65,12 @@ function _uncheckedIncrement(uint256 counter) private pure returns(uint256) {
 ...
 for (uint256 index; index < arrLength; index = _uncheckedIncrement(index)) {}
 ```
-It is a logical impossibility for index to overflow if it is always less than another integer (index < arrLength).  Skipping the unchecked saves ~60 gas per iteration.  Note: Part of the savings here comes from the fact that as of Solidity 0.8.2, the compiler will inline this function automatically.  Using an older pragma would reduce the gas savings. For additional info see [hrkrshnn's writeup](https://gist.github.com/hrkrshnn/ee8fabd532058307229d65dcd5836ddc)
+It is a logical impossibility for index to overflow if it is always less than another integer (`index < arrLength`).  Skipping the unchecked saves ~60 gas per iteration.  Note: Part of the savings here comes from the fact that as of Solidity 0.8.2, the compiler will inline this function automatically.  Using an older pragma would reduce the gas savings. For additional info see [hrkrshnn's writeup](https://gist.github.com/hrkrshnn/ee8fabd532058307229d65dcd5836ddc)
   - [Full Example](https://github.com/Rari-Capital/golf-course/blob/fc1882bacfec50787d9e9435d59fed4a9091fb21/src/optimized/UncheckedIncrement.sol)
 
 
 - - - -
-### Use ++index instead of index++ to increment a loop counter ###
+### Use `++index` instead of `index++` to increment a loop counter ###
 
 ```solidity
 /// 🤦 Unoptimized (gas: 2064)
@@ -79,11 +79,11 @@ for (uint256 index; index < arrLength; index++) {}
 /// 🚀 Optimized (gas: 2014)
 for (uint256 index; index < arrLength; ++index) {}
 ```
-Due to reduced stack operations, using ++index saves 5 gas per iteration
+Due to reduced stack operations, using `++index` saves 5 gas per iteration
   - [Full Example](https://github.com/Rari-Capital/golf-course/blob/fc1882bacfec50787d9e9435d59fed4a9091fb21/src/optimized/PlusPlusIndex.sol)
 
 - - - -
-### Prefer using immutable to storage ###
+### Prefer using `immutable` to `storage` ###
 
 ```solidity
 uint256 public immutableNumber;
@@ -95,11 +95,11 @@ uint256 sum = storageNumber + 1;
 /// 🚀 Optimized (gas: 1024)
 uint256 sum = immutableNumber + 1;
 ```
-Each storage read of the state variable is replaced by the instruction push32 value, where value is set during contract construction time. For additional info see [hrkrshnn's writeup](https://gist.github.com/hrkrshnn/ee8fabd532058307229d65dcd5836ddc)
+Each storage read of the state variable is replaced by the instruction `PUSH32` value, where value is set during contract construction time. For additional info see [hrkrshnn's writeup](https://gist.github.com/hrkrshnn/ee8fabd532058307229d65dcd5836ddc)
   - [Full Example](https://github.com/Rari-Capital/golf-course/blob/fc1882bacfec50787d9e9435d59fed4a9091fb21/src/optimized/UseImmutable.sol)
 
 - - - -
-### Make functions payable ###
+### Make functions `payable` ###
 
 ```solidity
 
@@ -109,7 +109,7 @@ function doSomething() external pure {}
 /// 🚀 Optimized (gas: 760)
 function doSomething() payable external {}
 ```
-Making functions payable eliminates the need for an initial check of msg.value == 0 and saves 21 gas. Note: This conservatively assumes the function could be pure if not for the payable.  When compared against an non-pure function the savings is more.  Note: For certain contracts, adding a payable function where none existed previously could introduce a security risk. Use with caution.
+Making functions `payable` eliminates the need for an initial check of `msg.value == 0` and saves 21 gas. Note: This conservatively assumes the function could be `pure` if not for the `payable`.  When compared against an non-`pure` function the savings is more.  Note: For certain contracts, adding a `payable` function where none existed previously could introduce a security risk. Use with caution.
   - [Full Example](https://github.com/Rari-Capital/golf-course/blob/fc1882bacfec50787d9e9435d59fed4a9091fb21/src/optimized/PayableFunctions.sol)
 
 - - - -
@@ -131,7 +131,7 @@ The `SHR` opcode is 3 gas cheaper than `DIV` and more imporantly, bypasses Solid
 
 
 - - - -
-### In require(), use != 0 instead of > 0 with UINTs ###
+### In `require()`, use `!= 0` instead of `> 0` with `uint` values ###
 
 ```solidity
 uint256 notZero = 4;
@@ -142,7 +142,7 @@ require(notZero > 0);
 /// 🚀 Optimized (gas: 861)
 require(notZero != 0);
 ```
-In a require, when checking a UINT, using != 0 instead of > 0 saves 6 gas. Note: This only works in require but not in other situations.  For more info see [this thread](https://twitter.com/transmissions11/status/1469848358558711808?s=20&t=hyTZxmZKXq06opE8wgo1aA)
+In a require, when checking a `uint`, using `!= 0` instead of `> 0` saves 6 gas. Note: This only works in require but not in other situations.  For more info see [this thread](https://twitter.com/transmissions11/status/1469848358558711808?s=20&t=hyTZxmZKXq06opE8wgo1aA)
   - [Full Example](https://github.com/Rari-Capital/golf-course/blob/fc1882bacfec50787d9e9435d59fed4a9091fb21/src/optimized/RequireNeZero.sol)
 
 
