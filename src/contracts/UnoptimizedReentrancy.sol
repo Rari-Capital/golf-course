@@ -21,5 +21,4 @@ contract UnoptimizedReentrancy {
         amount3 = amount1 + amount2;
         emit GenericEvent();
     }
-
 }

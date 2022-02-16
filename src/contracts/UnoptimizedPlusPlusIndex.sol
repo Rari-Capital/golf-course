@@ -6,6 +6,8 @@ contract UnoptimizedPlusPlusIndex {
 
     function plusPlusIndex() external view {
         uint256 arrLength = arr.length;
+
+        /// 🤦 Unoptimized
         for (uint256 index; index < arrLength; index++) {}
     }
 

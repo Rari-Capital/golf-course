@@ -11,6 +11,8 @@ contract OptimizedUncheckedIncrement {
     }
     function uncheckedIncrement() external view {
         uint256 arrLength = arr.length;
+
+        /// 🚀 Optimized
         for (uint256 index; index < arrLength; index = _uncheckedIncrement(index)) {}
     }
 

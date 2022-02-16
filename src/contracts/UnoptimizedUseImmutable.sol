@@ -10,6 +10,7 @@ contract UnoptimizedUseImmutable {
         storageNumber = 1;
     }
     function useImmutable() external view returns(uint256) {
+        /// 🤦 Unoptimized
         return storageNumber + 1;
     }
 

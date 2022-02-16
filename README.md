@@ -116,6 +116,22 @@ The `SHR` opcode is 3 gas cheaper than `DIV` and more imporantly, bypasses Solid
   - [Full Example](https://github.com/Rari-Capital/golf-course/blob/fc1882bacfec50787d9e9435d59fed4a9091fb21/src/OptimizedDivideByTwo.sol)
 
 
+- - - -
+### In require(), use != 0 instead of > 0 with UINTs ###
+
+```solidity
+uint256 notZero = 4;
+
+/// 🤦 Unoptimized (gas: 942)
+require(notZero > 0);
+
+/// 🚀 Optimized (gas: 866)
+require(notZero != 0);
+```
+In a require, when checking a UINT, using != 0 instead of > 0 saves 6 gas. Note: This only works in require but not in other situations.  For more info see [this thread](https://twitter.com/transmissions11/status/1469848358558711808?s=20&t=hyTZxmZKXq06opE8wgo1aA)
+  - [Full Example](https://github.com/Rari-Capital/golf-course/blob/fc1882bacfec50787d9e9435d59fed4a9091fb21/src/OptimizedRequireNeZero.sol)
+
+
 
 
 # Myths
