@@ -113,6 +113,21 @@ Making functions `payable` eliminates the need for an initial check of `msg.valu
   - [Full Example](https://github.com/Rari-Capital/golf-course/blob/fc1882bacfec50787d9e9435d59fed4a9091fb21/src/optimized/PayableFunctions.sol)
 
 - - - -
+### For array elements, arr[i] = arr[i] + 1 is cheaper than arr[i] += 1 ###
+
+```solidity
+uint256[2] public arr = [uint256(1), 2]; // storage
+
+/// 🤦 Unoptimized (gas: 1110)
+arr[0] += 1;
+
+/// 🚀 Optimized (gas: 1085)
+arr[0] = arr[0] + 1;
+```
+Due to stack operations this is 25 gas cheaper when dealing with arrays in storage, and 4 gas cheaper for memory arrays.
+  - [Full Example](https://github.com/Rari-Capital/golf-course/blob/fc1882bacfec50787d9e9435d59fed4a9091fb21/src/optimized/ArrayPlus.sol)
+
+- - - -
 ### When dividing by two, use `>> 1` instead of `/ 2` ###
 
 ```solidity

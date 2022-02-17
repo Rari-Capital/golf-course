@@ -11,6 +11,7 @@ import "./../contracts/unoptimized/UncheckedIncrement.sol";
 import "./../contracts/unoptimized/UseImmutable.sol";
 import "./../contracts/unoptimized/RequireNeZero.sol";
 import "./../contracts/unoptimized/PayableFunctions.sol";
+import "./../contracts/unoptimized/ArrayPlus.sol";
 
 contract Test is DSTest {
     CacheArrLength public ctrctCacheArrLength;
@@ -21,6 +22,7 @@ contract Test is DSTest {
     UseImmutable public ctrctUseImmutable;
     RequireNeZero public ctrctRequireNeZero;
     PayableFunctions public ctrctPayableFunctions;
+    ArrayPlus public ctrctArrayPlus;
 
     function setUp() public {
         ctrctCacheArrLength = new CacheArrLength();
@@ -31,8 +33,12 @@ contract Test is DSTest {
         ctrctUseImmutable = new UseImmutable();
         ctrctRequireNeZero = new RequireNeZero();
         ctrctPayableFunctions = new PayableFunctions();
+        ctrctArrayPlus = new ArrayPlus();
     }
 
+    function testArrayPlus() public {
+        ctrctArrayPlus.arrayPlus();
+    }
     function testPayableFunctions() public {
         ctrctPayableFunctions.payableFunctions();
     }
