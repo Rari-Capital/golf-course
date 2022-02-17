@@ -28,7 +28,7 @@ modifier nonReentrant() {
 }
 ```
 
-Use a reentrancy guard like [Solmate](https://github.com/Rari-Capital/solmate/blob/main/src/utils/ReentrancyGuard.sol) which employs `uint` instead of `bool` storage variable which saves gas.
+Use a reentrancy guard like [Solmate](https://github.com/Rari-Capital/solmate/blob/main/src/utils/ReentrancyGuard.sol) which employs `uint` instead of `bool` storage variable which saves gas.  The initial `SSTORE` of _true_ in the unoptimized version costs over 20,000 gas while the second SSTORE of _false_ costs only 100.  But both `SSTORE` (for 2 and 1) cost only 100 gas.
   - [Full Example](https://github.com/Rari-Capital/golf-course/blob/fc1882bacfec50787d9e9435d59fed4a9091fb21/src/optimized/Reentrancy.sol)
 
 - - - -
@@ -151,6 +151,5 @@ In a require, when checking a `uint`, using `!= 0` instead of `> 0` saves 6 gas.
 # Myths
 - - - -
 
-- - - -
-### Note on gas numbers:  The gas usage numbers include the total gas reported by Dapp Test for running a test which calls the example function.  This includes the gas overhead of the test itself.  The important number here is the gas savings which is the difference between optimized and unoptimized gas usage numbers.  We have done our best to reduce noise in the estimates and confirm the actual gas usage based on opcodes run.  But there have still been some inconsistencies in the gas numbers between the two contracts used for testing.
+
 
