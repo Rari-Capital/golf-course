@@ -4,6 +4,7 @@ pragma solidity ^0.8.11;
 contract Reentrancy {
     event GenericEvent();
 
+
     uint256 private locked = 1;
 
     modifier nonReentrant() {
